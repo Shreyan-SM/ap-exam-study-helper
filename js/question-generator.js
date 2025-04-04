@@ -1,9 +1,10 @@
 // Configuration for the Gemini API
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+const API_KEY = 'AIzaSyD_cNfRm7aP13asPjDwk16i6X1TvVu7-No';
 
 class QuestionGenerator {
-    constructor(apiKey) {
-        this.apiKey = apiKey;
+    constructor() {
+        // No need to pass API key in constructor anymore
     }
 
     async generateQuestion(subject, chapter) {
@@ -17,7 +18,7 @@ class QuestionGenerator {
         }`;
 
         try {
-            const response = await fetch(`${GEMINI_API_URL}?key=${this.apiKey}`, {
+            const response = await fetch(`${GEMINI_API_URL}?key=${API_KEY}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -47,20 +48,7 @@ class QuestionGenerator {
 
 // Function to initialize the question generator
 async function initQuestionGenerator() {
-    // Check if API key is stored
-    const apiKey = localStorage.getItem('geminiApiKey');
-    
-    if (!apiKey) {
-        const keyInput = prompt('Please enter your Google Gemini API key:');
-        if (keyInput) {
-            localStorage.setItem('geminiApiKey', keyInput);
-            return new QuestionGenerator(keyInput);
-        } else {
-            throw new Error('API key is required');
-        }
-    }
-    
-    return new QuestionGenerator(apiKey);
+    return new QuestionGenerator();
 }
 
 // Function to display a question
