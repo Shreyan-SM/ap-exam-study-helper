@@ -162,17 +162,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Continue button click handler
     continueBtn.addEventListener('click', () => {
-        // Store selected chapters in localStorage
-        const selectedChaptersData = Array.from(selectedChapters).map(chapterId => {
-            const checkbox = document.querySelector(`[data-chapter-id="${chapterId}"]`);
-            return {
-                subject: checkbox.getAttribute('data-subject'),
-                chapterIndex: parseInt(checkbox.getAttribute('data-chapter-index')),
-                chapterName: classChapters[checkbox.getAttribute('data-subject')].chapters[parseInt(checkbox.getAttribute('data-chapter-index'))]
-            };
+        // Save selected chapters to localStorage
+        const selectedChapters = [];
+        document.querySelectorAll('.chapter-checkbox:checked').forEach(checkbox => {
+            const chapter = checkbox.closest('.chapter');
+            const subject = chapter.closest('.subject');
+            selectedChapters.push({
+                subject: subject.querySelector('.subject-title').textContent,
+                chapterName: chapter.querySelector('.chapter-title').textContent
+            });
         });
-        localStorage.setItem('selectedChapters', JSON.stringify(selectedChaptersData));
-        // Redirect to the generate questions page
+        localStorage.setItem('selectedChapters', JSON.stringify(selectedChapters));
+        
+        // Navigate to the question generation page
         window.location.href = 'generate-questions.html';
     });
 }); 

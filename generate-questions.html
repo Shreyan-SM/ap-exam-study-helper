@@ -4,27 +4,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generate Questions - AP Exam Study Helper</title>
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/generate-questions.css">
 </head>
 <body>
     <div class="container">
         <header>
             <h1>Practice Questions</h1>
-            <h2 id="selected-info"></h2>
+            <div id="selected-info"></div>
         </header>
-        
+
         <main>
+            <div id="controls">
+                <button id="generate-btn" class="primary-btn">Generate New Question</button>
+                <button id="back-btn" class="secondary-btn">Back to Chapters</button>
+            </div>
+
             <div id="question-container">
-                <!-- Questions will be dynamically added here -->
+                <!-- Questions will be displayed here -->
+            </div>
+
+            <div id="error-message" class="error-message hidden">
+                <!-- Error messages will be displayed here -->
             </div>
         </main>
-
-        <div class="controls">
-            <button id="back-btn" class="secondary-btn">Back to Chapters</button>
-            <button id="generate-btn" class="primary-btn">Generate New Question</button>
-        </div>
     </div>
 
-    <script src="js/generate-questions.js"></script>
+    <script src="js/chapters-data.js"></script>
+    <script src="js/question-generator.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const questionContainer = document.getElementById('question-container');
+            const generateBtn = document.getElementById('generate-btn');
+            const backBtn = document.getElementById('back-btn');
+            const selectedInfo = document.getElementById('selected-info');
+            const errorMessage = document.getElementById('error-message');
+
+            // Get selected chapters from localStorage
+            const selectedChapters = JSON.parse(localStorage.getItem('selectedChapters') || '[]');
+            
+            if (selectedChapters.length === 0) {
+                errorMessage.textContent = 'No chapters selected. Please go back and select some chapters.';
+                errorMessage.classList.remove('hidden');
+                generateBtn.disabled = true;
+                return;
+            }
+
+            // Display selected chapters info
+            const chaptersList = selectedChapters.map(ch => 
+                `${ch.subject} - ${ch.chapterName}`
+            ).join(', ');
+            selectedInfo.textContent = `Selected: ${chaptersList}`;
+
+            // Initialize question generator
+            let generator;
+            try {
+                generator = await initQuestionGenerator();
+            } catch (error) {
+                errorMessage.textContent = 'Failed to initialize question generator. Please make sure you have a valid API key.';
+                errorMessage.classList.remove('hidden');
+                generateBtn.disabled = true;
+                return;
+            }
+
+            // Handle generate button click
+            generateBtn.addEventListener('click', async () => {
+                try {
+                    generateBtn.disabled = true;
+                    generateBtn.textContent = 'Generating...';
+                    errorMessage.classList.add('hidden');
+
+                    // Randomly select a chapter
+                    const randomChapter = selectedChapters[Math.floor(Math.random() * selectedChapters.length)];
+                    
+                    // Generate and display question
+                    const questionData = await generator.generateQuestion(randomChapter.subject, randomChapter.chapterName);
+                    displayQuestion(questionData, questionContainer);
+                } catch (error) {
+                    errorMessage.textContent = 'Failed to generate question. Please try again.';
+                    errorMessage.classList.remove('hidden');
+                } finally {
+                    generateBtn.disabled = false;
+                    generateBtn.textContent = 'Generate New Question';
+                }
+            });
+
+            // Handle back button click
+            backBtn.addEventListener('click', () => {
+                window.location.href = 'select-chapters.html';
+            });
+        });
+    </script>
 </body>
 </html> 
