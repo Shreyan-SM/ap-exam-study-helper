@@ -4,7 +4,7 @@ const API_KEY = 'AIzaSyD_cNfRm7aP13asPjDwk16i6X1TvVu7-No';
 
 class QuestionGenerator {
     constructor() {
-        // No need to pass API key in constructor anymore
+        // No need for constructor initialization
     }
 
     async generateQuestion(subject, chapter) {
