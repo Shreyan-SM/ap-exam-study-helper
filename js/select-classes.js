@@ -59,4 +59,91 @@ document.addEventListener('DOMContentLoaded', () => {
         // Redirect to the chapter selection page
         window.location.href = 'select-chapters.html';
     });
-}); 
+});
+
+function initializeClassSelection() {
+    const classCards = document.querySelectorAll('.class-card');
+    const continueBtn = document.getElementById('continue-btn');
+    const selectionCount = document.getElementById('selection-count');
+    let selectedClasses = new Set();
+
+    // Add select all buttons for each subject section
+    document.querySelectorAll('.subject-section').forEach(section => {
+        const subjectTitle = section.querySelector('.subject-title').textContent;
+        const classCards = section.querySelectorAll('.class-card');
+        const selectAllBtn = document.createElement('button');
+        selectAllBtn.className = 'secondary-btn';
+        selectAllBtn.textContent = 'Select All';
+        selectAllBtn.style.marginBottom = '1rem';
+        
+        section.querySelector('.subject-title').after(selectAllBtn);
+
+        selectAllBtn.addEventListener('click', () => {
+            const allSelected = Array.from(classCards).every(card => card.classList.contains('selected'));
+            
+            classCards.forEach(card => {
+                if (allSelected) {
+                    // Deselect all
+                    card.classList.remove('selected');
+                    selectedClasses.delete(card.dataset.className);
+                } else {
+                    // Select all
+                    card.classList.add('selected');
+                    selectedClasses.add(card.dataset.className);
+                }
+            });
+
+            selectAllBtn.textContent = allSelected ? 'Select All' : 'Deselect All';
+            updateSelectionCount();
+            updateContinueButton();
+        });
+    });
+
+    function updateSelectionCount() {
+        selectionCount.textContent = `${selectedClasses.size} classes selected`;
+    }
+
+    function updateContinueButton() {
+        if (selectedClasses.size > 0) {
+            continueBtn.removeAttribute('disabled');
+            continueBtn.classList.remove('disabled');
+        } else {
+            continueBtn.setAttribute('disabled', 'true');
+            continueBtn.classList.add('disabled');
+        }
+    }
+
+    classCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const className = card.dataset.className;
+            
+            if (card.classList.toggle('selected')) {
+                selectedClasses.add(className);
+            } else {
+                selectedClasses.delete(className);
+            }
+
+            // Update the select all button for this section
+            const section = card.closest('.subject-section');
+            const selectAllBtn = section.querySelector('.secondary-btn');
+            const sectionCards = section.querySelectorAll('.class-card');
+            const allSelected = Array.from(sectionCards).every(card => card.classList.contains('selected'));
+            selectAllBtn.textContent = allSelected ? 'Deselect All' : 'Select All';
+
+            updateSelectionCount();
+            updateContinueButton();
+        });
+    });
+
+    // Initialize counts
+    updateSelectionCount();
+    updateContinueButton();
+
+    // Handle continue button click
+    continueBtn.addEventListener('click', () => {
+        if (selectedClasses.size > 0) {
+            localStorage.setItem('selectedClasses', JSON.stringify(Array.from(selectedClasses)));
+            window.location.href = 'select-chapters.html';
+        }
+    });
+} 

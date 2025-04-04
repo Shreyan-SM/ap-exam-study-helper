@@ -4,259 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Select AP Classes - AP Exam Study Helper</title>
-    <link rel="stylesheet" href="css/select-classes.css">
+    <link rel="stylesheet" href="css/select-classes.css?v=5">
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Select Your AP Classes</h1>
-            <p class="subtitle">Choose the AP classes you're taking or planning to take</p>
-        </header>
-        
-        <main>
-            <div class="subject-sections">
-                <!-- Mathematics Section -->
-                <section class="subject-section">
-                    <h2 class="subject-title">Mathematics</h2>
-                    <div class="class-grid">
-                        <div class="class-card" data-subject="calculus-ab">
-                            <div class="card-content">
-                                <h3>AP Calculus AB</h3>
-                                <p>First semester college calculus</p>
-                            </div>
-                        </div>
-
-                        <div class="class-card" data-subject="calculus-bc">
-                            <div class="card-content">
-                                <h3>AP Calculus BC</h3>
-                                <p>Full year of college calculus</p>
-                            </div>
-                        </div>
-
-                        <div class="class-card" data-subject="statistics">
-                            <div class="card-content">
-                                <h3>AP Statistics</h3>
-                                <p>Statistical analysis and probability</p>
-                            </div>
-                        </div>
-
-                        <div class="class-card" data-subject="precalculus">
-                            <div class="card-content">
-                                <h3>AP Precalculus</h3>
-                                <p>Foundation for college mathematics</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Science Section -->
-                <section class="subject-section">
-                    <h2 class="subject-title">Science</h2>
-                    <div class="class-grid">
-                        <div class="class-card" data-subject="biology">
-                            <div class="card-content">
-                                <h3>AP Biology</h3>
-                                <p>Molecular and cellular biology</p>
-                            </div>
-                        </div>
-
-                        <div class="class-card" data-subject="chemistry">
-                            <div class="card-content">
-                                <h3>AP Chemistry</h3>
-                                <p>Chemical processes and reactions</p>
-                            </div>
-                        </div>
-
-                        <div class="class-card" data-subject="environmental-science">
-                            <div class="card-content">
-                                <h3>AP Environmental Science</h3>
-                                <p>Environmental systems and society</p>
-                            </div>
-                        </div>
-
-                        <div class="class-card" data-subject="physics-1">
-                            <div class="card-content">
-                                <h3>AP Physics 1</h3>
-                                <p>Algebra-based mechanics</p>
-                            </div>
-                        </div>
-
-                        <div class="class-card" data-subject="physics-2">
-                            <div class="card-content">
-                                <h3>AP Physics 2</h3>
-                                <p>Electricity, magnetism, and modern physics</p>
-                            </div>
-                        </div>
-
-                        <div class="class-card" data-subject="physics-c-mechanics">
-                            <div class="card-content">
-                                <h3>AP Physics C: Mechanics</h3>
-                                <p>Calculus-based mechanics</p>
-                            </div>
-                        </div>
-
-                        <div class="class-card" data-subject="physics-c-em">
-                            <div class="card-content">
-                                <h3>AP Physics C: E&M</h3>
-                                <p>Calculus-based electricity and magnetism</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Computer Science Section -->
-                <section class="subject-section">
-                    <h2 class="subject-title">Computer Science</h2>
-                    <div class="class-grid">
-                        <div class="class-card" data-subject="computer-science-a">
-                            <div class="card-content">
-                                <h3>AP Computer Science A</h3>
-                                <p>Java programming and algorithms</p>
-                            </div>
-                        </div>
-
-                        <div class="class-card" data-subject="computer-science-principles">
-                            <div class="card-content">
-                                <h3>AP Computer Science Principles</h3>
-                                <p>Computing concepts and practices</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- English Section -->
-                <section class="subject-section">
-                    <h2 class="subject-title">English</h2>
-                    <div class="class-grid">
-                        <div class="class-card" data-subject="english-language">
-                            <div class="card-content">
-                                <h3>AP English Language and Composition</h3>
-                                <p>Rhetorical analysis and composition</p>
-                            </div>
-                        </div>
-
-                        <div class="class-card" data-subject="english-literature">
-                            <div class="card-content">
-                                <h3>AP English Literature and Composition</h3>
-                                <p>Literary analysis and critical reading</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Social Sciences Section -->
-                <section class="subject-section">
-                    <h2 class="subject-title">Social Sciences</h2>
-                    <div class="class-grid">
-                        <div class="class-card" data-subject="psychology">
-                            <div class="card-content">
-                                <h3>AP Psychology</h3>
-                                <p>Human behavior and mental processes</p>
-                            </div>
-                        </div>
-
-                        <div class="class-card" data-subject="human-geography">
-                            <div class="card-content">
-                                <h3>AP Human Geography</h3>
-                                <p>Patterns of human population and culture</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- History and Government Section -->
-                <section class="subject-section">
-                    <h2 class="subject-title">History and Government</h2>
-                    <div class="class-grid">
-                        <div class="class-card" data-subject="us-history">
-                            <div class="card-content">
-                                <h3>AP United States History</h3>
-                                <p>American history from pre-colonial to present</p>
-                            </div>
-                        </div>
-
-                        <div class="class-card" data-subject="world-history">
-                            <div class="card-content">
-                                <h3>AP World History</h3>
-                                <p>Global historical patterns and connections</p>
-                            </div>
-                        </div>
-
-                        <div class="class-card" data-subject="european-history">
-                            <div class="card-content">
-                                <h3>AP European History</h3>
-                                <p>European history from Renaissance to present</p>
-                            </div>
-                        </div>
-
-                        <div class="class-card" data-subject="gov-politics-us">
-                            <div class="card-content">
-                                <h3>AP Government and Politics - US</h3>
-                                <p>American government and political system</p>
-                            </div>
-                        </div>
-
-                        <div class="class-card" data-subject="gov-politics-comp">
-                            <div class="card-content">
-                                <h3>AP Government and Politics - Comparative</h3>
-                                <p>Comparative analysis of political systems</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Economics Section -->
-                <section class="subject-section">
-                    <h2 class="subject-title">Economics</h2>
-                    <div class="class-grid">
-                        <div class="class-card" data-subject="macroeconomics">
-                            <div class="card-content">
-                                <h3>AP Macroeconomics</h3>
-                                <p>National and global economic systems</p>
-                            </div>
-                        </div>
-
-                        <div class="class-card" data-subject="microeconomics">
-                            <div class="card-content">
-                                <h3>AP Microeconomics</h3>
-                                <p>Individual market behavior and decisions</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Capstone Section -->
-                <section class="subject-section">
-                    <h2 class="subject-title">Capstone</h2>
-                    <div class="class-grid">
-                        <div class="class-card" data-subject="seminar">
-                            <div class="card-content">
-                                <h3>AP Seminar</h3>
-                                <p>Critical thinking and research skills</p>
-                            </div>
-                        </div>
-
-                        <div class="class-card" data-subject="research">
-                            <div class="card-content">
-                                <h3>AP Research</h3>
-                                <p>Independent research and academic paper</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </main>
-
+        <h1>Select Your AP Classes</h1>
+        <div class="selection-info">
+            <span id="selection-count">0 classes selected</span>
+        </div>
+        <div id="class-container">
+            <!-- Classes will be dynamically inserted here -->
+        </div>
         <div class="selection-controls">
-            <div class="selection-info">
-                <p class="selection-count">Selected: <span id="selected-count">0</span> classes</p>
-                <button id="deselect-all" class="secondary-btn">Deselect All</button>
-            </div>
-            <button id="continue-btn" class="primary-btn" disabled>Continue</button>
+            <button id="continue-btn" class="primary-btn" disabled>Continue to Chapters</button>
         </div>
     </div>
-
-    <script src="js/classes-data.js"></script>
-    <script src="js/select-classes.js"></script>
+    <script src="js/chapters-data.js?v=5"></script>
+    <script src="js/select-classes.js?v=5"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeClassSelection();
+        });
+    </script>
 </body>
 </html> 
