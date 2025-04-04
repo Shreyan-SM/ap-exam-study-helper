@@ -113,6 +113,20 @@ function initializeClassSelection() {
         }
     }
 
+    // Restore previously selected classes from localStorage
+    const savedClasses = JSON.parse(localStorage.getItem('selectedClasses') || '[]');
+    if (savedClasses.length > 0) {
+        savedClasses.forEach(className => {
+            const card = document.querySelector(`[data-class-name="${className}"]`);
+            if (card) {
+                card.classList.add('selected');
+                selectedClasses.add(className);
+            }
+        });
+        updateSelectionCount();
+        updateContinueButton();
+    }
+
     classCards.forEach(card => {
         card.addEventListener('click', () => {
             const className = card.dataset.className;

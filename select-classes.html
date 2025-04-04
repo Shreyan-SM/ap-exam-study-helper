@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Select AP Classes - AP Exam Study Helper</title>
-    <link rel="stylesheet" href="css/select-classes.css?v=5">
+    <link rel="stylesheet" href="css/select-classes.css?v=6">
 </head>
 <body>
     <div class="container">
@@ -12,15 +12,144 @@
         <div class="selection-info">
             <span id="selection-count">0 classes selected</span>
         </div>
-        <div id="class-container">
-            <!-- Classes will be dynamically inserted here -->
-        </div>
+
+        <!-- Mathematics Section -->
+        <section class="subject-section">
+            <h2 class="subject-title">Mathematics</h2>
+            <div class="class-grid">
+                <div class="class-card" data-class-name="calculus-ab">
+                    <div class="card-content">
+                        <h3>AP Calculus AB</h3>
+                        <p>First semester college calculus</p>
+                    </div>
+                </div>
+                <div class="class-card" data-class-name="calculus-bc">
+                    <div class="card-content">
+                        <h3>AP Calculus BC</h3>
+                        <p>Full year of college calculus</p>
+                    </div>
+                </div>
+                <div class="class-card" data-class-name="statistics">
+                    <div class="card-content">
+                        <h3>AP Statistics</h3>
+                        <p>Statistical analysis and probability</p>
+                    </div>
+                </div>
+                <div class="class-card" data-class-name="precalculus">
+                    <div class="card-content">
+                        <h3>AP Precalculus</h3>
+                        <p>Foundation for college mathematics</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Science Section -->
+        <section class="subject-section">
+            <h2 class="subject-title">Science</h2>
+            <div class="class-grid">
+                <div class="class-card" data-class-name="biology">
+                    <div class="card-content">
+                        <h3>AP Biology</h3>
+                        <p>Molecular and cellular biology</p>
+                    </div>
+                </div>
+                <div class="class-card" data-class-name="chemistry">
+                    <div class="card-content">
+                        <h3>AP Chemistry</h3>
+                        <p>Chemical processes and reactions</p>
+                    </div>
+                </div>
+                <div class="class-card" data-class-name="environmental-science">
+                    <div class="card-content">
+                        <h3>AP Environmental Science</h3>
+                        <p>Environmental systems and society</p>
+                    </div>
+                </div>
+                <div class="class-card" data-class-name="physics-1">
+                    <div class="card-content">
+                        <h3>AP Physics 1</h3>
+                        <p>Algebra-based mechanics</p>
+                    </div>
+                </div>
+                <div class="class-card" data-class-name="physics-2">
+                    <div class="card-content">
+                        <h3>AP Physics 2</h3>
+                        <p>Electricity, magnetism, and modern physics</p>
+                    </div>
+                </div>
+                <div class="class-card" data-class-name="physics-c-mechanics">
+                    <div class="card-content">
+                        <h3>AP Physics C: Mechanics</h3>
+                        <p>Calculus-based mechanics</p>
+                    </div>
+                </div>
+                <div class="class-card" data-class-name="physics-c-em">
+                    <div class="card-content">
+                        <h3>AP Physics C: E&M</h3>
+                        <p>Calculus-based electricity and magnetism</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Computer Science Section -->
+        <section class="subject-section">
+            <h2 class="subject-title">Computer Science</h2>
+            <div class="class-grid">
+                <div class="class-card" data-class-name="computer-science-a">
+                    <div class="card-content">
+                        <h3>AP Computer Science A</h3>
+                        <p>Java programming and algorithms</p>
+                    </div>
+                </div>
+                <div class="class-card" data-class-name="computer-science-principles">
+                    <div class="card-content">
+                        <h3>AP Computer Science Principles</h3>
+                        <p>Computing concepts and practices</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- English Section -->
+        <section class="subject-section">
+            <h2 class="subject-title">English</h2>
+            <div class="class-grid">
+                <div class="class-card" data-class-name="english-language">
+                    <div class="card-content">
+                        <h3>AP English Language and Composition</h3>
+                        <p>Rhetorical analysis and composition</p>
+                    </div>
+                </div>
+                <div class="class-card" data-class-name="english-literature">
+                    <div class="card-content">
+                        <h3>AP English Literature and Composition</h3>
+                        <p>Literary analysis and critical reading</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- History Section -->
+        <section class="subject-section">
+            <h2 class="subject-title">History</h2>
+            <div class="class-grid">
+                <div class="class-card" data-class-name="us-history">
+                    <div class="card-content">
+                        <h3>AP United States History</h3>
+                        <p>American history from pre-colonial to present</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <div class="selection-controls">
             <button id="continue-btn" class="primary-btn" disabled>Continue to Chapters</button>
         </div>
     </div>
-    <script src="js/chapters-data.js?v=5"></script>
-    <script src="js/select-classes.js?v=5"></script>
+    <script src="js/chapters-data.js?v=6"></script>
+    <script src="js/select-classes.js?v=6"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             initializeClassSelection();
