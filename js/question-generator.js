@@ -8,14 +8,15 @@ class QuestionGenerator {
     }
 
     async generateQuestion(subject, chapter) {
-        const prompt = `Generate an AP-level multiple choice question for ${subject} - ${chapter}.
-        Format your response as a JSON object with this structure:
+        const prompt = `Generate an AP-level multiple choice question for ${subject}, chapter: ${chapter}.
+        Format your response EXACTLY as a JSON object with this structure:
         {
             "question": "The question text",
             "options": ["Option A", "Option B", "Option C", "Option D"],
-            "correctAnswer": 0,  // Index of the correct answer (0-3)
+            "correctAnswer": 0,
             "explanation": "Detailed explanation of why this is the correct answer"
-        }`;
+        }
+        Make sure to escape any quotes in the text and ensure the response is valid JSON.`;
 
         try {
             const response = await fetch(`${GEMINI_API_URL}?key=${API_KEY}`, {
@@ -28,7 +29,31 @@ class QuestionGenerator {
                         parts: [{
                             text: prompt
                         }]
-                    }]
+                    }],
+                    generationConfig: {
+                        temperature: 0.7,
+                        topK: 40,
+                        topP: 0.95,
+                        maxOutputTokens: 1024,
+                    },
+                    safetySettings: [
+                        {
+                            category: "HARM_CATEGORY_HARASSMENT",
+                            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                        },
+                        {
+                            category: "HARM_CATEGORY_HATE_SPEECH",
+                            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                        },
+                        {
+                            category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                        },
+                        {
+                            category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+                            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                        }
+                    ]
                 })
             });
 
@@ -37,8 +62,28 @@ class QuestionGenerator {
             }
 
             const data = await response.json();
+            if (!data.candidates || !data.candidates[0] || !data.candidates[0].content || !data.candidates[0].content.parts || !data.candidates[0].content.parts[0].text) {
+                throw new Error('Invalid response format from API');
+            }
+
             const generatedText = data.candidates[0].content.parts[0].text;
-            return JSON.parse(generatedText);
+            
+            // Extract JSON from the response text
+            const jsonMatch = generatedText.match(/\{[\s\S]*\}/);
+            if (!jsonMatch) {
+                throw new Error('No JSON found in response');
+            }
+
+            const questionData = JSON.parse(jsonMatch[0]);
+            
+            // Validate the question data structure
+            if (!questionData.question || !Array.isArray(questionData.options) || 
+                questionData.options.length !== 4 || typeof questionData.correctAnswer !== 'number' ||
+                !questionData.explanation) {
+                throw new Error('Invalid question data format');
+            }
+
+            return questionData;
         } catch (error) {
             console.error('Error generating question:', error);
             throw error;
@@ -97,5 +142,14 @@ function displayQuestion(questionData, container) {
             input.disabled = true;
         });
         checkButton.disabled = true;
+
+        // Add visual feedback to options
+        container.querySelectorAll('.option').forEach((option, index) => {
+            if (index === questionData.correctAnswer) {
+                option.classList.add('correct');
+            } else if (index === selectedIndex && !isCorrect) {
+                option.classList.add('incorrect');
+            }
+        });
     });
 } 
