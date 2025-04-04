@@ -8,15 +8,29 @@ class QuestionGenerator {
     }
 
     async generateQuestion(subject, chapter) {
-        const prompt = `Generate an AP-level multiple choice question for ${subject}, chapter: ${chapter}.
-        Format your response EXACTLY as a JSON object with this structure:
-        {
-            "question": "The question text",
-            "options": ["Option A", "Option B", "Option C", "Option D"],
-            "correctAnswer": 0,
-            "explanation": "Detailed explanation of why this is the correct answer"
-        }
-        Make sure to escape any quotes in the text and ensure the response is valid JSON.`;
+        const prompt = `You are an AP exam question generator. Generate one multiple choice question for ${subject}, chapter: ${chapter}.
+
+Your response must be a valid JSON object with exactly this structure:
+{
+    "question": "Write a clear, concise AP-level question here",
+    "options": [
+        "Write option A here",
+        "Write option B here",
+        "Write option C here",
+        "Write option D here"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Write a detailed explanation of why the correct answer is right and why others are wrong"
+}
+
+Requirements:
+1. The response must be ONLY the JSON object, no other text
+2. The question should be AP exam level difficulty
+3. All 4 options must be plausible
+4. correctAnswer must be 0-3 indicating the index of the correct option
+5. The explanation must be thorough and educational
+6. Ensure all quotes and special characters are properly escaped
+7. The JSON must be valid and parseable`;
 
         try {
             const response = await fetch(`${GEMINI_API_URL}?key=${API_KEY}`, {
@@ -66,7 +80,7 @@ class QuestionGenerator {
                 throw new Error('Invalid response format from API');
             }
 
-            const generatedText = data.candidates[0].content.parts[0].text;
+            const generatedText = data.candidates[0].content.parts[0].text.trim();
             
             // Extract JSON from the response text
             const jsonMatch = generatedText.match(/\{[\s\S]*\}/);
@@ -79,6 +93,7 @@ class QuestionGenerator {
             // Validate the question data structure
             if (!questionData.question || !Array.isArray(questionData.options) || 
                 questionData.options.length !== 4 || typeof questionData.correctAnswer !== 'number' ||
+                questionData.correctAnswer < 0 || questionData.correctAnswer > 3 ||
                 !questionData.explanation) {
                 throw new Error('Invalid question data format');
             }
@@ -86,7 +101,7 @@ class QuestionGenerator {
             return questionData;
         } catch (error) {
             console.error('Error generating question:', error);
-            throw error;
+            throw new Error('Failed to generate question. Please try again.');
         }
     }
 }
