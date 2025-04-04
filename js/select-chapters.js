@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const continueBtn = document.getElementById('continue-btn');
     const selectAllBtn = document.getElementById('select-all');
     const deselectAllBtn = document.getElementById('deselect-all');
+    const selectedClassHeader = document.getElementById('selected-class');
 
     // Define the order of subjects as they appear in the selection page
     const subjectOrder = [
@@ -28,11 +29,21 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     // Get selected classes from localStorage
-    const selectedClasses = JSON.parse(localStorage.getItem('selectedAPClasses') || '[]');
+    const selectedClasses = JSON.parse(localStorage.getItem('selectedClasses') || '[]');
     
     // Create a new array with the selected classes in the correct order
     const orderedSelectedClasses = subjectOrder.filter(subject => selectedClasses.includes(subject));
     
+    // Update the header to show selected classes
+    if (orderedSelectedClasses.length > 0) {
+        const classNames = orderedSelectedClasses.map(id => classChapters[id]?.name || id).join(', ');
+        selectedClassHeader.textContent = `Selected Classes: ${classNames}`;
+    } else {
+        selectedClassHeader.textContent = 'No classes selected';
+        subjectsContainer.innerHTML = '<p class="no-classes">Please go back and select some classes first.</p>';
+        return;
+    }
+
     const selectedChapters = new Set();
 
     // Function to update the selection count and button state
@@ -82,7 +93,9 @@ document.addEventListener('DOMContentLoaded', () => {
             chapterDiv.innerHTML = `
                 <input type="checkbox" class="chapter-checkbox" 
                        id="${chapterId}" 
-                       data-chapter-id="${chapterId}">
+                       data-chapter-id="${chapterId}"
+                       data-subject="${subjectId}"
+                       data-chapter-index="${index}">
                 <label class="chapter-label" for="${chapterId}">${chapter}</label>
             `;
             chaptersGrid.appendChild(chapterDiv);
@@ -150,7 +163,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Continue button click handler
     continueBtn.addEventListener('click', () => {
         // Store selected chapters in localStorage
-        localStorage.setItem('selectedChapters', JSON.stringify([...selectedChapters]));
+        const selectedChaptersData = Array.from(selectedChapters).map(chapterId => {
+            const checkbox = document.querySelector(`[data-chapter-id="${chapterId}"]`);
+            return {
+                subject: checkbox.getAttribute('data-subject'),
+                chapterIndex: parseInt(checkbox.getAttribute('data-chapter-index')),
+                chapterName: classChapters[checkbox.getAttribute('data-subject')].chapters[parseInt(checkbox.getAttribute('data-chapter-index'))]
+            };
+        });
+        localStorage.setItem('selectedChapters', JSON.stringify(selectedChaptersData));
         // Redirect to the generate questions page
         window.location.href = 'generate-questions.html';
     });
