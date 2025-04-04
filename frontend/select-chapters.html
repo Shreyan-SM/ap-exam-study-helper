@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Chapters - AP Exam Study Helper</title>
+    <link rel="stylesheet" href="css/select-chapters.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Select Chapters</h1>
+            <h2 id="selected-class"></h2>
+        </header>
+        
+        <main>
+            <div class="chapter-selection">
+                <div class="chapter-list" id="chapter-list">
+                    <!-- Chapters will be dynamically added here -->
+                </div>
+            </div>
+        </main>
+
+        <div class="selection-controls">
+            <div class="button-group">
+                <button id="back-btn" class="secondary-btn">Back to Classes</button>
+                <button id="select-all-btn" class="secondary-btn">Select All</button>
+                <button id="deselect-all-btn" class="secondary-btn">Deselect All</button>
+            </div>
+            <button id="generate-btn" class="primary-btn" disabled>Generate Questions</button>
+        </div>
+    </div>
+
+    <script src="js/chapters-data.js"></script>
+    <script src="js/select-chapters.js"></script>
+</body>
+</html> 
