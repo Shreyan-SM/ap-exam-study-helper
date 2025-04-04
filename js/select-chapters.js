@@ -163,16 +163,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Continue button click handler
     continueBtn.addEventListener('click', () => {
         // Save selected chapters to localStorage
-        const selectedChapters = [];
+        const selectedChaptersData = [];
         document.querySelectorAll('.chapter-checkbox:checked').forEach(checkbox => {
-            const chapter = checkbox.closest('.chapter');
-            const subject = chapter.closest('.subject');
-            selectedChapters.push({
-                subject: subject.querySelector('.subject-title').textContent,
-                chapterName: chapter.querySelector('.chapter-title').textContent
+            const subjectId = checkbox.getAttribute('data-subject');
+            const chapterIndex = parseInt(checkbox.getAttribute('data-chapter-index'));
+            selectedChaptersData.push({
+                subject: classChapters[subjectId].name,
+                chapterName: classChapters[subjectId].chapters[chapterIndex]
             });
         });
-        localStorage.setItem('selectedChapters', JSON.stringify(selectedChapters));
+        localStorage.setItem('selectedChapters', JSON.stringify(selectedChaptersData));
         
         // Navigate to the question generation page
         window.location.href = 'generate-questions.html';
